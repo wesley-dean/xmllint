@@ -18,6 +18,7 @@ pipeline {
         git_credential = "$params.git_credential"
         build_time = sh(script: 'date --rfc-3339=seconds', returnStdout: true).trim()
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
+        DISABLE_LINTERS = "SPELL_CSPELL"
     }
 
     triggers {
