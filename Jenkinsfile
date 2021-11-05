@@ -1,23 +1,22 @@
 pipeline {
-
   parameters {
-      string (
-        name: 'repository_url',
-        defaultValue: 'https://github.com/wesley-dean/xmllint.git',
-        description: 'the URL to the Git repository'
-      )
+        string (
+          name: 'repository_url',
+          defaultValue: 'https://github.com/wesley-dean/xmllint.git',
+          description: 'the URL to the Git repository'
+        )
 
-    string (
-        name: 'git_credential',
-        defaultValue: 'github-wesley-dean',
-        description: 'the ID of the credential to use to interact with GitHub'
-      )
+        string (
+            name: 'git_credential',
+            defaultValue: 'github-wesley-dean',
+            description: 'the ID of the credential to use to interact with GitHub'
+        )
     }
 
     environment {
         repository_url = "$params.repository_url"
         git_credential = "$params.git_credential"
-        build_time = sh(script: "date --rfc-3339=seconds", returnStdout: true).trim()
+        build_time = sh(script: 'date --rfc-3339=seconds', returnStdout: true).trim()
     }
 
     triggers {
@@ -31,7 +30,7 @@ pipeline {
 
     agent any
     stages {
-        stage ('Checkout') {
+        stage('Checkout') {
             steps {
                 git branch: 'master',
                 credentialsId: git_credential,
@@ -39,8 +38,7 @@ pipeline {
             }
         }
 
-
-        stage ('Semgrep') {
+        stage('Semgrep') {
             agent {
                 docker {
                     image 'returntocorp/semgrep'
@@ -50,12 +48,12 @@ pipeline {
             }
 
             steps {
-                sh 'semgrep --config auto --error "${WORKSPACE}"'
+                sh "semgrep --config auto --error '${WORKSPACE}'"
             }
         }
 
 
-        stage ('Basic File Checks') {
+        stage('Basic File Checks') {
             agent {
                 docker {
                     image 'cytopia/awesome-ci'
@@ -79,7 +77,7 @@ pipeline {
             }
         }
 
-        stage ('Meta-Linter') {
+        stage('Meta-Linter') {
           agent {
               docker {
                   image 'megalinter/megalinter:latest'
