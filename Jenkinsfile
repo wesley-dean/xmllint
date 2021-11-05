@@ -153,9 +153,13 @@ pipeline {
                 }
             }
 
+            environment {
+              PATTERN = '**/*.{htm,html}'
+            }
+
             steps {
                 script {
-                    sh 'PATTERN="**/*.{html,htm}" /entrypoint.sh --html'
+                    sh '/entrypoint.sh --html'
                 }
             }
         }
