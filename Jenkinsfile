@@ -3,7 +3,7 @@ pipeline {
   parameters {
       string (
         name: 'repository_url',
-        defaultValue: 'https://github.com/wesley-dean/aws_ssh_authentication_helper.git',
+        defaultValue: 'https://github.com/wesley-dean/xmllint.git',
         description: 'the URL to the Git repository'
       )
 
