@@ -52,31 +52,6 @@ pipeline {
             }
         }
 
-
-        stage('Basic File Checks') {
-            agent {
-                docker {
-                    image 'cytopia/awesome-ci'
-                    reuseNode true
-                }
-            }
-
-            steps {
-                script {
-                    def tests = [
-                        'file-trailing-newline': '--text',
-                        'file-trailing-space':   '--text',
-                        'file-utf8':             '--text',
-                        'git-conflicts':         '--text',
-                    ]
-
-                    tests.each() {
-                        sh "$it.key $it.value --ignore='.git,.svn' --path='.'"
-                    }
-                }
-            }
-        }
-
         stage('Meta-Linter') {
           agent {
               docker {
