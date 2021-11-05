@@ -127,6 +127,40 @@ pipeline {
             }
         }
 
+        stage ('XML Lint') {
+            agent {
+                docker {
+                    image 'wesley-dean/xmllint:latest'
+                    args  '--entrypoint=""'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                script {
+                    sh '/entrypoint.sh
+                }
+            }
+        }
+
+
+        stage ('HTML Lint') {
+            agent {
+                docker {
+                    image 'wesley-dean/xmllint:latest'
+                    args  '--entrypoint=""'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                script {
+                    sh 'PATTERN="**/*.{html,htm}" /entrypoint.sh --html'
+                }
+            }
+        }
+
+
 
         stage ('YAML Lint') {
             agent {
