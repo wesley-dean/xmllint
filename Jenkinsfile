@@ -83,7 +83,7 @@ pipeline {
           agent {
               docker {
                   image 'megalinter/megalinter:latest'
-                  args args "-e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=''"
+                  args "-e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=''"
                   reuseNode true
               }
           }
