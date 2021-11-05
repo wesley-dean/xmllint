@@ -138,7 +138,7 @@ pipeline {
 
             steps {
                 script {
-                    sh '/entrypoint.sh
+                    sh '/entrypoint.sh'
                 }
             }
         }
