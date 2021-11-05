@@ -1,12 +1,12 @@
 pipeline {
-  parameters {
-        string (
+    parameters {
+        string(
           name: 'repository_url',
           defaultValue: 'https://github.com/wesley-dean/xmllint.git',
           description: 'the URL to the Git repository'
         )
 
-        string (
+        string(
             name: 'git_credential',
             defaultValue: 'github-wesley-dean',
             description: 'the ID of the credential to use to interact with GitHub'
@@ -53,17 +53,17 @@ pipeline {
         }
 
         stage('Meta-Linter') {
-          agent {
-              docker {
-                  image 'megalinter/megalinter:latest'
-                  args "-e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=''"
-                  reuseNode true
-              }
-          }
+            agent {
+                docker {
+                    image 'megalinter/megalinter:latest'
+                    args "-e VALIDATE_ALL_CODEBASE=true -v ${WORKSPACE}:/tmp/lint --entrypoint=''"
+                    reuseNode true
+                }
+            }
 
-          steps {
-              sh '/entrypoint.sh'
-          }
-      }
+            steps {
+                sh '/entrypoint.sh'
+            }
+        }
     }
 }
