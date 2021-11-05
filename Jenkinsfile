@@ -130,7 +130,7 @@ pipeline {
         stage ('XML Lint') {
             agent {
                 docker {
-                    image 'wesley-dean/xmllint:latest'
+                    image 'wesleydean/xmllint:latest'
                     args  '--entrypoint=""'
                     reuseNode true
                 }
@@ -147,7 +147,7 @@ pipeline {
         stage ('HTML Lint') {
             agent {
                 docker {
-                    image 'wesley-dean/xmllint:latest'
+                    image 'wesleydean/xmllint:latest'
                     args  '--entrypoint=""'
                     reuseNode true
                 }
