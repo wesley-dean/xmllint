@@ -72,8 +72,8 @@ pipeline {
         stage('Push Updated Code') {
             steps {
             withCredentials([usernamePassword(credentialsId: "$git_credential", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                sh('git commit -nam "Apply fixes from Mega-Linter"')
-                sh('git push  --tags')
+                sh 'git commit -nam "Apply fixes from Mega-Linter"'
+                sh 'git push  --tags'
             }
         }
     }
