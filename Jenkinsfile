@@ -19,6 +19,7 @@ pipeline {
         build_time = sh(script: 'date --rfc-3339=seconds', returnStdout: true).trim()
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
+        APPLY_FIXES = 'all'
     }
 
     triggers {
@@ -65,6 +66,14 @@ pipeline {
 
             steps {
                 sh '/entrypoint.sh'
+            }
+        }
+
+        stage('Push Updated Code') {
+            steps {
+            withCredentials([usernamePassword(credentialsId: "$git_credential", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                sh('git commit -nam "Apply fixes from Mega-Linter"')
+                sh('git push  --tags')
             }
         }
     }
