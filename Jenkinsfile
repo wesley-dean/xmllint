@@ -2,7 +2,7 @@ pipeline {
     parameters {
         string(
           name: 'repository_url',
-          defaultValue: 'github.com/wesley-dean/xmllint.git',
+          defaultValue: 'https://github.com/wesley-dean/xmllint.git',
           description: 'the URL to the Git repository'
         )
 
@@ -16,7 +16,10 @@ pipeline {
     environment {
         repository_url = "$params.repository_url"
         git_credential = "$params.git_credential"
-        build_time = sh(script: 'date --rfc-3339=seconds', returnStdout: true).trim()
+        build_time = sh(script: 'date --rfc-3339=seconds', 
+            returnStdout: true).trim()
+        ssh_repo_url = sh(script: 'echo "${repository_url} | sed -Ee "s/^https?/ssh/"',
+            returnStdout: true).trim()
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
         APPLY_FIXES = 'all'
@@ -37,7 +40,7 @@ pipeline {
             steps {
                 git branch: 'master',
                 credentialsId: git_credential,
-                url: "https://${repository_url}"
+                url: "${repository_url}"
             }
         }
 
@@ -73,7 +76,7 @@ pipeline {
             steps {
                 sshagent(credentials: ["${git_credential}"]) {
                     sh 'git commit -nam "Apply fixes from Mega-Linter"'
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo_url}'
+                    sh 'git push ssh://${GIT_USERNAME}:${GIT_PASSWORD}@${ssh_repo_url}'
                 }
             }
         }
