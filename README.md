@@ -13,9 +13,16 @@ and runs `xmllint` on them.  Any arguments (i.e., what would be the
 Consider:
 
 * **--noout**: don't display working XML
-* **--html**: consider the files as HTML; use with `PATTERN=**/*.{htm,html}`
+* **--html**: consider the files as HTML
 
 If there are any files that fail the linting, an exit code of `1` is
 returned; otherwise (i.e., if there are no files or no files that
 have any errors), then an exit code of `0` is returned.
 
+## Linting HTML
+
+Linting HTML can be accomplished by passing the `--html` flag;
+however, one may wish to update the `PATTERN` environment
+variable to include HTML files:
+
+`PATTERN=**/*.{htm,html}`
