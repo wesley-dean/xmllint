@@ -71,7 +71,7 @@ pipeline {
 
         stage('Push Updated Code') {
             steps {
-                sshagent (credentials: ["${git_credentials}"]) {
+                sshagent(credentials: ["${git_credentials}"]) {
                     sh 'git commit -nam "Apply fixes from Mega-Linter"'
                     sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo_url}'
                 }
