@@ -7,9 +7,9 @@ PATTERN="${PATTERN:-**/*.xml}"
 
 result=0
 
-for filename in ${PATTERN} ; do
-  echo "$filename"
-  xmllint "$@" "$filename" || result=1
+for filename in ${PATTERN}; do
+	echo "$filename"
+	xmllint "$@" "$filename" || result=1
 done
 
 exit $result
