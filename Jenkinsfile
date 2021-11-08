@@ -79,7 +79,7 @@ pipeline {
                 passwordVariable: 'GIT_PASSWORD',
                 usernameVariable: 'GIT_USERNAME')]) {
                     sh 'git commit -nam "Apply fixes from Mega-Linter"'
-                    sh 'git push ssh://${GIT_USERNAME}:${GIT_PASSWORD}@${no_proto_repo_url}'
+                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${no_proto_repo_url}'
                 }
             }
         }
