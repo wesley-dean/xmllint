@@ -76,7 +76,7 @@ pipeline {
                     passwordVariable: 'GIT_PASSWORD',
                     usernameVariable: 'GIT_USERNAME')]) {
                     sh 'git commit -nam "Apply fixes from Mega-Linter"'
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repository_url} --tags'
+                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@$(echo "${repository_url}" | sed -Ee "s|[^/]*//||") --tags'
                 }
             }
         }
