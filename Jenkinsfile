@@ -2,7 +2,7 @@ pipeline {
     parameters {
         string(
           name: 'repository_url',
-          defaultValue: 'https://github.com/wesley-dean/xmllint.git',
+          defaultValue: 'github.com/wesley-dean/xmllint.git',
           description: 'the URL to the Git repository'
         )
 
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 git branch: 'master',
                 credentialsId: git_credential,
-                url: repository_url
+                url: "https://${repository_url}"
             }
         }
 
