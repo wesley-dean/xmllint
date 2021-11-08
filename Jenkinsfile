@@ -16,7 +16,7 @@ pipeline {
     environment {
         repository_url = "$params.repository_url"
         git_credential = "$params.git_credential"
-        build_time = sh(script: 'date --rfc-3339=seconds', 
+        build_time = sh(script: 'date --rfc-3339=seconds',
             returnStdout: true).trim()
         ssh_repo_url = sh(script: 'echo "${repository_url}" | sed -Ee "s/^https?/ssh/"',
             returnStdout: true).trim()
