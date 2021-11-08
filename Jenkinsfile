@@ -20,6 +20,7 @@ pipeline {
             returnStdout: true).trim()
         no_proto_repo_url = sh(script: 'echo "${repository_url}" | sed -Ee "s|^https?://||"',
             returnStdout: true).trim()
+        GIT_SSH_COMMAND = 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
         APPLY_FIXES = 'all'
