@@ -17,6 +17,7 @@ pipeline {
         repository_url = "$params.repository_url"
         git_credential = "$params.git_credential"
         build_time = sh(script: 'date --rfc-3339=seconds', returnStdout: true).trim()
+        git_repo = sh(script: 'echo "$params.repository_url" | sed -Ee "s|[a-z]*:/*||"')
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
         APPLY_FIXES = 'all'
@@ -76,7 +77,7 @@ pipeline {
                     passwordVariable: 'GIT_PASSWORD',
                     usernameVariable: 'GIT_USERNAME')]) {
                     sh 'git commit -nam "Apply fixes from Mega-Linter"'
-                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@$(echo "${repository_url}" | sed -Ee "s|[^/]*//||") --tags'
+                    sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo_url} --tags'
                 }
             }
         }
