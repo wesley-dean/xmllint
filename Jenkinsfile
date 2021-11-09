@@ -1,3 +1,4 @@
+
 pipeline {
     parameters {
         string(
@@ -58,6 +59,30 @@ pipeline {
                 sh "semgrep --config auto --error '${WORKSPACE}'"
             }
         }
+
+        stage ('Text File Cleanup') {
+            agent {
+                docker {
+                    image 'cytopia/awesome-ci'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                script {
+                    def tests = [
+                        'file-trailing-single-newline': '--text',
+                        'file-trailing-space':          '--text',
+                        'file-utf8':                    '--text'
+                    ]
+
+                    tests.each() {
+                        sh "$it.key $it.value --ignore='.git,.svn' --fix --path='.' || true"
+                    }
+                }
+            }
+        }
+
 
         stage('Meta-Linter') {
             agent {
