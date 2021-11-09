@@ -46,7 +46,7 @@ pipeline {
             }
         }
 
-        stage ('Text File Cleanup') {
+        stage('Text File Cleanup') {
             agent {
                 docker {
                     image 'cytopia/awesome-ci'
