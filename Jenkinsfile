@@ -26,7 +26,7 @@ pipeline {
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
         APPLY_FIXES = 'all'
-        ADDITIONAL_EXCLUDED_DIRECTORIES = "reports"
+        ADDITIONAL_EXCLUDED_DIRECTORIES = "report"
     }
 
     triggers {
