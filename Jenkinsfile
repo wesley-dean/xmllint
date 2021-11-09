@@ -46,6 +46,29 @@ pipeline {
             }
         }
 
+        stage ('Text File Cleanup') {
+            agent {
+                docker {
+                    image 'cytopia/awesome-ci'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                script {
+                    def tests = [
+                        'file-trailing-single-newline',
+                        'file-trailing-space',
+                        'file-utf8'
+                    ]
+
+                    tests.each {
+                        test -> sh "$test  --ignore='.git,.svn,report' --text --fix --path='.' || true"
+                    }
+                }
+            }
+        }
+
         stage('Semgrep') {
             agent {
                 docker {
@@ -59,30 +82,6 @@ pipeline {
                 sh "semgrep --config auto --error '${WORKSPACE}'"
             }
         }
-
-        stage ('Text File Cleanup') {
-            agent {
-                docker {
-                    image 'cytopia/awesome-ci'
-                    reuseNode true
-                }
-            }
-
-            steps {
-                script {
-                    def tests = [
-                        'file-trailing-single-newline': '--text',
-                        'file-trailing-space':          '--text',
-                        'file-utf8':                    '--text'
-                    ]
-
-                    tests.each() {
-                        sh "$it.key $it.value --ignore='.git,.svn' --fix --path='.' || true"
-                    }
-                }
-            }
-        }
-
 
         stage('Meta-Linter') {
             agent {
