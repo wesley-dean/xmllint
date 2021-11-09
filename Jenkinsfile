@@ -17,6 +17,7 @@ pipeline {
     environment {
         repository_url = "$params.repository_url"
         git_credential = "$params.git_credential"
+        branch         = "$params.branch"
         build_time = sh(script: 'date --rfc-3339=seconds',
             returnStdout: true).trim()
         no_proto_repo_url = sh(script: 'echo "${repository_url}" | sed -Ee "s|^https?://||"',
@@ -25,6 +26,7 @@ pipeline {
         GROOVY_NPM_GROOVY_LINT_ARGUMENTS = '--no-insight'
         DISABLE_LINTERS = 'SPELL_CSPELL'
         APPLY_FIXES = 'all'
+        ADDITIONAL_EXCLUDED_DIRECTORIES = "reports"
     }
 
     triggers {
@@ -40,7 +42,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
+                git branch: "$BRANCH_NAME",
                 credentialsId: git_credential,
                 url: "${repository_url}"
             }
