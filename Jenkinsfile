@@ -104,7 +104,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: "${git_credential}",
                 passwordVariable: 'GIT_PASSWORD',
                 usernameVariable: 'GIT_USERNAME')]) {
-                    sh 'git commit -nam "Apply fixes from Mega-Linter"'
+                    sh 'git diff-index --quiet HEAD || git commit -nam "Apply fixes from Mega-Linter"'
                     sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${no_proto_repo_url}'
                 }
             }
