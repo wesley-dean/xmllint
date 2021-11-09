@@ -15,7 +15,8 @@ pipeline {
     }
 
     environment {
-        repository_url = "$params.repository_url"
+        //repository_url = "$params.repository_url"
+        repository_url = "${GIT_URL}"
         git_credential = "$params.git_credential"
         branch         = "$params.branch"
         build_time = sh(script: 'date --rfc-3339=seconds',
