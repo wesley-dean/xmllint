@@ -2,12 +2,6 @@
 pipeline {
     parameters {
         string(
-          name: 'repository_url',
-          defaultValue: 'https://github.com/wesley-dean/xmllint.git',
-          description: 'the URL to the Git repository'
-        )
-
-        string(
             name: 'git_credential',
             defaultValue: 'github-wesley-dean',
             description: 'the ID of the credential to use to interact with GitHub'
@@ -15,7 +9,6 @@ pipeline {
     }
 
     environment {
-        //repository_url = "$params.repository_url"
         repository_url = "${GIT_URL}"
         git_credential = "$params.git_credential"
         branch         = "$params.branch"
